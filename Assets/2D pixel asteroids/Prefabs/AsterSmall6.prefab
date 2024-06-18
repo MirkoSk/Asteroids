@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5195202866901388283}
   - component: {fileID: 7997106071794780008}
+  - component: {fileID: 6875191682630276923}
   m_Layer: 0
   m_Name: AsterSmall6
   m_TagString: Untagged
@@ -84,3 +85,16 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &6875191682630276923
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 72295631480350893}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4fc5ce10f9a7cb445806bf0c7b8cc98d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Drag: 0

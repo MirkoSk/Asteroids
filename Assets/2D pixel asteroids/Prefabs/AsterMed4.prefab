@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1102140773862506242}
   - component: {fileID: 5180755141132262398}
+  - component: {fileID: 9153351880360306952}
   m_Layer: 0
   m_Name: AsterMed4
   m_TagString: Untagged
@@ -84,3 +85,16 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &9153351880360306952
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7979792204202706108}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4fc5ce10f9a7cb445806bf0c7b8cc98d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Drag: 0
