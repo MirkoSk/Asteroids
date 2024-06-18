@@ -3,8 +3,6 @@ using Unity.Entities;
 using Unity.Collections;
 using Unity.Transforms;
 using Unity.Mathematics;
-using System.Diagnostics;
-using System.Linq;
 
 namespace Asteroids
 {
@@ -28,6 +26,7 @@ namespace Asteroids
 
             var random = Random.CreateFromIndex(updateCounter++);
 
+            // TODO: How to spawn a random prefab from an array?
             var instances = state.EntityManager.Instantiate(asteroidSpawner.AsteroidPrefab, asteroidSpawner.SpawnCount, Allocator.Temp);
 
             foreach (var asteroid in instances)

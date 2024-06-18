@@ -7,6 +7,7 @@ namespace Asteroids
     class MovementAuthoring : MonoBehaviour
     {
         public float Drag;
+        public float MaxSpeed = 10f;
 
         class Baker : Baker<MovementAuthoring>
         {
@@ -15,7 +16,8 @@ namespace Asteroids
                 var entity = GetEntity(TransformUsageFlags.None);
                 AddComponent(entity, new Movement
                 {
-                    Drag = authoring.Drag
+                    Drag = authoring.Drag,
+                    MaxSpeed = authoring.MaxSpeed
                 });
             }
         }
@@ -25,5 +27,6 @@ namespace Asteroids
     {
         public float2 Value;
         public float Drag;
+        public float MaxSpeed;
     }
 }
