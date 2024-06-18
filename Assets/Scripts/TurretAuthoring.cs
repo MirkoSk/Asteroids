@@ -7,6 +7,7 @@ namespace Asteroids
     {
         public GameObject ProjectilePrefab;
         public float ProjectileSpeed;
+        public float ProjectileLifetime;
 
         class Baker : Baker<TurretAuthoring>
         {
@@ -16,7 +17,8 @@ namespace Asteroids
                 AddComponent(entity, new Turret
                 {
                     ProjectilePrefab = GetEntity(authoring.ProjectilePrefab, TransformUsageFlags.Dynamic),
-                    ProjectileSpeed = authoring.ProjectileSpeed
+                    ProjectileSpeed = authoring.ProjectileSpeed,
+                    ProjectileLifetime = authoring.ProjectileLifetime
                 });
             }
         }
@@ -26,5 +28,6 @@ namespace Asteroids
     {
         public Entity ProjectilePrefab;
         public float ProjectileSpeed;
+        public double ProjectileLifetime;
     }
 }

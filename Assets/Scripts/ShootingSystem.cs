@@ -20,18 +20,23 @@ partial struct ShootingSystem : ISystem
         {
             foreach (var (transform, turret) in SystemAPI.Query<RefRO<LocalToWorld>, RefRO<Turret>>())
             {
-                Entity bullet = state.EntityManager.Instantiate(turret.ValueRO.ProjectilePrefab);
+                Entity projectile = state.EntityManager.Instantiate(turret.ValueRO.ProjectilePrefab);
 
                 // Set transform
-                var bulletTransform = SystemAPI.GetComponentRW<LocalTransform>(bullet);
+                var bulletTransform = SystemAPI.GetComponentRW<LocalTransform>(projectile);
                 bulletTransform.ValueRW.Position = transform.ValueRO.Position;
                 bulletTransform.ValueRW.Rotation = transform.ValueRO.Rotation;
 
                 // Set movement
                 float2 shootingDirection = new float2(transform.ValueRO.Up.x, transform.ValueRO.Up.y);
-                var bulletMovement = SystemAPI.GetComponentRW<Movement>(bullet);
+                var bulletMovement = SystemAPI.GetComponentRW<Movement>(projectile);
                 bulletMovement.ValueRW.Value = math.normalize(shootingDirection) * turret.ValueRO.ProjectileSpeed;
                 bulletMovement.ValueRW.MaxSpeed = turret.ValueRO.ProjectileSpeed;
+
+                // Set projectile lifetime
+                var projectileComponent = SystemAPI.GetComponentRW<Projectile>(projectile);
+                projectileComponent.ValueRW.SpawnTime = SystemAPI.Time.ElapsedTime;
+                projectileComponent.ValueRW.Lifetime = turret.ValueRO.ProjectileLifetime;
             }
         }
     }

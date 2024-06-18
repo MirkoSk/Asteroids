@@ -20,6 +20,7 @@ namespace Asteroids
 
     struct Projectile : IComponentData
     {
-
+        public double SpawnTime;
+        public double Lifetime;
     }
 }
