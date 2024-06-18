@@ -5,7 +5,8 @@ namespace Asteroids
 {
     class PlayerAuthoring : MonoBehaviour
     {
-        public float Force;
+        public float Force = 0.01f;
+        public float RotationSpeed = 1f;
 
         class Baker : Baker<PlayerAuthoring>
         {
@@ -14,7 +15,8 @@ namespace Asteroids
                 var entity = GetEntity(TransformUsageFlags.Dynamic);
                 AddComponent(entity, new Player
                 {
-                    Force = authoring.Force
+                    Force = authoring.Force,
+                    RotationSpeed = authoring.RotationSpeed
                 });
             }
         }
@@ -23,5 +25,6 @@ namespace Asteroids
     struct Player : IComponentData
     {
         public float Force;
+        public float RotationSpeed;
     }
 }

@@ -7,7 +7,7 @@ namespace Asteroids
     class MovementAuthoring : MonoBehaviour
     {
         public float Drag;
-        public float MaxSpeed = 10f;
+        public float MaxSpeed = 5f;
 
         class Baker : Baker<MovementAuthoring>
         {
