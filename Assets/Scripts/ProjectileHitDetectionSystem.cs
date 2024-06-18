@@ -4,6 +4,7 @@ using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
 
+[UpdateAfter(typeof(ShipCollisionSystem))]
 partial struct ProjectileHitDetectionSystem : ISystem
 {
     uint updateCounter;
@@ -21,16 +22,16 @@ partial struct ProjectileHitDetectionSystem : ISystem
 
         var random = Random.CreateFromIndex(updateCounter++);
 
-        foreach (var (projectileTransform, projectileEntity) in 
+        foreach (var (projectileWorldTransform, projectileEntity) in 
             SystemAPI.Query<RefRO<LocalToWorld>>().WithAll<Projectile>()
-            .WithEntityAccess())
-        {
-            foreach (var (asteroidTransform, asteroidMovement, asteroid, asteroidEntity) in 
-                SystemAPI.Query<RefRO<LocalToWorld>, RefRO<Movement>, RefRO<Asteroid>>()
                 .WithEntityAccess())
+        {
+            foreach (var (asteroidWorldTransform, asteroidMovement, asteroid, asteroidEntity) in 
+                SystemAPI.Query<RefRO<LocalToWorld>, RefRO<Movement>, RefRO<Asteroid>>()
+                    .WithEntityAccess())
             {
-                // A projectile hit an asteroid
-                if (math.distancesq(projectileTransform.ValueRO.Position, asteroidTransform.ValueRO.Position) < asteroid.ValueRO.CollisionRadiusSQ)
+                // Did a projectile hit an asteroid?
+                if (math.distancesq(projectileWorldTransform.ValueRO.Position, asteroidWorldTransform.ValueRO.Position) < asteroid.ValueRO.CollisionRadiusSQ)
                 {
                     // Destroy projectile
                     entityCommandBuffer.DestroyEntity(projectileEntity);
@@ -43,7 +44,7 @@ partial struct ProjectileHitDetectionSystem : ISystem
                             Entity newAsteroidEntity = entityCommandBuffer.Instantiate(asteroid.ValueRO.FragmentPrefab);
                             entityCommandBuffer.SetComponent(newAsteroidEntity, new LocalTransform
                             {
-                                Position = asteroidTransform.ValueRO.Position,
+                                Position = asteroidWorldTransform.ValueRO.Position,
                                 Rotation = quaternion.identity,
                                 Scale = 1f
                             });
