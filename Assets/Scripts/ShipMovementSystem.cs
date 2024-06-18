@@ -11,7 +11,7 @@ partial struct ShipMovementSystem : ISystem
     [BurstCompile]
     public void OnCreate(ref SystemState state)
     {
-        state.RequireForUpdate<Player>();
+        state.RequireForUpdate<Ship>();
     }
 
     [BurstCompile]
@@ -22,7 +22,7 @@ partial struct ShipMovementSystem : ISystem
 
         if (accelerateInput != 0f || turnInput != 0f)
         {
-            foreach (var (transform, movement, player) in SystemAPI.Query<RefRW<LocalTransform>, RefRW<Movement>, RefRO<Player>>())
+            foreach (var (transform, movement, player) in SystemAPI.Query<RefRW<LocalTransform>, RefRW<Movement>, RefRO<Ship>>())
             {
                 // Rotate the ship
                 transform.ValueRW = transform.ValueRO.RotateZ(-turnInput * player.ValueRO.RotationSpeed * SystemAPI.Time.DeltaTime);

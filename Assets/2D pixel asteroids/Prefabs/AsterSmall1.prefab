@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3398839194376591794}
   - component: {fileID: 3861097418370609488}
   - component: {fileID: 5914213489384813721}
+  - component: {fileID: 8396807805121941077}
   m_Layer: 0
   m_Name: AsterSmall1
   m_TagString: Untagged
@@ -28,7 +29,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.6000001, y: 1.6000001, z: 1.6000001}
+  m_LocalScale: {x: 1.6999999, y: 1.6999999, z: 1.6999999}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -99,3 +100,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Drag: 0
   MaxSpeed: 5
+--- !u!114 &8396807805121941077
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1273717868519207366}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32d3bc8566d228343a5f8a734f5beb8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionRadius: 0.15
+  FragmentPrefab: {fileID: 0}
+  FragmentsAmount: 0

@@ -38,7 +38,7 @@ namespace Asteroids
                 transform.ValueRW.Position = newPosition;
 
                 var movement = SystemAPI.GetComponentRW<Movement>(asteroid);
-                movement.ValueRW.Value = math.normalize(random.NextFloat2(-1f, 1f)) * asteroidSpawner.Velocity;
+                movement.ValueRW.Value = math.normalize(random.NextFloat2(-1f, 1f)) * asteroidSpawner.Velocity * random.NextFloat(0.8f, 1.2f);
             }
         }
 

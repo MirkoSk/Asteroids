@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3170027746248751975}
   - component: {fileID: 4660189417732057674}
   - component: {fileID: 3644668813249460111}
+  - component: {fileID: 1077042776391509803}
   m_Layer: 0
   m_Name: AsterMed1
   m_TagString: Untagged
@@ -99,3 +100,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Drag: 0
   MaxSpeed: 5
+--- !u!114 &1077042776391509803
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6747026704579016348}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32d3bc8566d228343a5f8a734f5beb8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionRadius: 0.3
+  FragmentPrefab: {fileID: 1273717868519207366, guid: 0b41583a19866d64b9483e371372b152, type: 3}
+  FragmentsAmount: 2

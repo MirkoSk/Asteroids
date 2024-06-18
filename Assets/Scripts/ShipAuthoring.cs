@@ -3,17 +3,17 @@ using UnityEngine;
 
 namespace Asteroids
 {
-    class PlayerAuthoring : MonoBehaviour
+    class ShipAuthoring : MonoBehaviour
     {
         public float Force = 0.01f;
         public float RotationSpeed = 1f;
 
-        class Baker : Baker<PlayerAuthoring>
+        class Baker : Baker<ShipAuthoring>
         {
-            public override void Bake(PlayerAuthoring authoring)
+            public override void Bake(ShipAuthoring authoring)
             {
                 var entity = GetEntity(TransformUsageFlags.Dynamic);
-                AddComponent(entity, new Player
+                AddComponent(entity, new Ship
                 {
                     Force = authoring.Force,
                     RotationSpeed = authoring.RotationSpeed
@@ -22,7 +22,7 @@ namespace Asteroids
         }
     }
 
-    struct Player : IComponentData
+    struct Ship : IComponentData
     {
         public float Force;
         public float RotationSpeed;
