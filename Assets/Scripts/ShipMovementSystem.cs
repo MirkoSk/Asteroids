@@ -6,7 +6,7 @@ using Unity.Transforms;
 using UnityEngine;
 
 [UpdateBefore(typeof(MovementSystem))]
-partial struct ShipControlSystem : ISystem
+partial struct ShipMovementSystem : ISystem
 {
     [BurstCompile]
     public void OnCreate(ref SystemState state)
@@ -20,7 +20,7 @@ partial struct ShipControlSystem : ISystem
         float turnInput = Input.GetAxis("Horizontal");
         float accelerateInput = math.clamp(Input.GetAxis("Vertical"), 0f, 1f);
 
-        if (accelerateInput != 0f || !Equals(turnInput, float2.zero))
+        if (accelerateInput != 0f || turnInput != 0f)
         {
             foreach (var (transform, movement, player) in SystemAPI.Query<RefRW<LocalTransform>, RefRW<Movement>, RefRO<Player>>())
             {
