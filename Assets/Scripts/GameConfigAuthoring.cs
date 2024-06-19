@@ -7,6 +7,7 @@ namespace Asteroids
     public class GameConfigAuthoring : MonoBehaviour
     {
         public Vector2 PlayAreaBounds;
+        public float ShipRespawnDuration = 3f;
 
         class Baker : Baker<GameConfigAuthoring>
         {
@@ -15,7 +16,8 @@ namespace Asteroids
                 var entity = GetEntity(TransformUsageFlags.None);
                 AddComponent(entity, new GameConfig
                 {
-                    PlayAreaBounds = authoring.PlayAreaBounds
+                    PlayAreaBounds = authoring.PlayAreaBounds,
+                    ShipRespawnDuration = authoring.ShipRespawnDuration
                 });
             }
         }
@@ -24,6 +26,7 @@ namespace Asteroids
     public struct GameConfig : IComponentData
     {
         public float2 PlayAreaBounds;
+        public float ShipRespawnDuration;
     }
 }
 

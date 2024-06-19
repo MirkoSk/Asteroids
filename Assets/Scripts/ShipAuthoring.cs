@@ -7,6 +7,7 @@ namespace Asteroids
     {
         public float Force = 0.01f;
         public float RotationSpeed = 1f;
+        public int Lives = 3;
 
         class Baker : Baker<ShipAuthoring>
         {
@@ -16,7 +17,8 @@ namespace Asteroids
                 AddComponent(entity, new Ship
                 {
                     Force = authoring.Force,
-                    RotationSpeed = authoring.RotationSpeed
+                    RotationSpeed = authoring.RotationSpeed,
+                    Lives = authoring.Lives
                 });
             }
         }
@@ -26,5 +28,7 @@ namespace Asteroids
     {
         public float Force;
         public float RotationSpeed;
+        public int Lives;
+        public double DeathTimestamp;
     }
 }

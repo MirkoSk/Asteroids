@@ -1,3 +1,4 @@
+using System;
 using Asteroids;
 using Unity.Burst;
 using Unity.Entities;
@@ -7,23 +8,18 @@ using Unity.Transforms;
 // Projectile hit detection can create asteroid fragments that reside at (0,0,0) until its EntityCommandBuffer plays
 // => We need to update the ship collision before that happens to prevent the ship from getting hit at (0,0,0) for no apparent reason
 [UpdateBefore(typeof(ProjectileHitDetectionSystem))]
-partial struct ShipCollisionSystem : ISystem
+[BurstCompile]
+partial class ShipCollisionSystem : SystemBase
 {
-    [BurstCompile]
-    public void OnCreate(ref SystemState state)
-    {
-        state.RequireForUpdate<Ship>();
-        state.RequireForUpdate<Asteroid>();
-    }
+    public event Action<int> OnDeath;
 
     [BurstCompile]
-    public void OnUpdate(ref SystemState state)
+    protected override void OnUpdate()
     {
         EntityCommandBuffer entityCommandBuffer = new EntityCommandBuffer(Unity.Collections.Allocator.Temp);
 
-        foreach (var (shipWorldTransform, shipEntity) in 
-            SystemAPI.Query<RefRO<LocalToWorld>>()
-                .WithAll<Ship>()
+        foreach (var (shipWorldTransform, ship, shipEntity) in 
+            SystemAPI.Query<RefRO<LocalToWorld>, RefRW<Ship>>()
                 .WithEntityAccess())
         {
             foreach (var (asteroidWorldTransform, asteroid) in
@@ -32,21 +28,27 @@ partial struct ShipCollisionSystem : ISystem
                 // Collision with an asteroid?
                 if (math.distancesq(shipWorldTransform.ValueRO.Position, asteroidWorldTransform.ValueRO.Position) < 0.08f + asteroid.ValueRO.CollisionRadiusSQ)
                 {
-                    entityCommandBuffer.DestroyEntity(shipEntity);
-                    // TODO: Decrease lives left and respawn ship after a delay
+                    // Reduce lives
+                    ship.ValueRW.Lives--;
+                    ship.ValueRW.DeathTimestamp = SystemAPI.Time.ElapsedTime;
+
+                    // Disable ship entity and all its children
+                    foreach (var linkedEntity in SystemAPI.GetBuffer<LinkedEntityGroup>(shipEntity))
+                    {
+                        entityCommandBuffer.AddComponent<Disabled>(linkedEntity.Value);
+                    }
+
+                    // TODO: Pass lives as parameter
+                    // Notify GameObject land about the death
+                    OnDeath?.Invoke(ship.ValueRO.Lives);
+
                     break;
                 }
             }
         }
 
-        entityCommandBuffer.Playback(state.EntityManager);
+        entityCommandBuffer.Playback(EntityManager);
 
         entityCommandBuffer.Dispose();
-    }
-
-    [BurstCompile]
-    public void OnDestroy(ref SystemState state)
-    {
-        
     }
 }
