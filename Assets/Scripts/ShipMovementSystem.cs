@@ -17,6 +17,8 @@ partial struct ShipMovementSystem : ISystem
     [BurstCompile]
     public void OnUpdate(ref SystemState state)
     {
+        EntityCommandBuffer entityCommandBuffer = new EntityCommandBuffer(Unity.Collections.Allocator.Temp);
+
         float turnInput = Input.GetAxis("Horizontal");
         float accelerateInput = math.clamp(Input.GetAxis("Vertical"), 0f, 1f);
 
@@ -32,6 +34,23 @@ partial struct ShipMovementSystem : ISystem
                 movement.ValueRW.Value += moveDirection * accelerateInput * player.ValueRO.Force;
             }
         }
+
+        // Update ship's thruster graphic depending on move input
+        foreach (var (shipThruster, entity) in SystemAPI.Query<RefRO<ShipThruster>>().WithEntityAccess().WithOptions(EntityQueryOptions.IncludeDisabledEntities))
+        {
+            if (accelerateInput != 0 && SystemAPI.HasComponent<Disabled>(entity))
+            {
+                entityCommandBuffer.RemoveComponent<Disabled>(entity);
+            }
+            else if (accelerateInput == 0 && !SystemAPI.HasComponent<Disabled>(entity))
+            {
+                entityCommandBuffer.AddComponent<Disabled>(entity);
+            }
+        }
+
+        entityCommandBuffer.Playback(state.EntityManager);
+
+        entityCommandBuffer.Dispose();
     }
 
     [BurstCompile]
