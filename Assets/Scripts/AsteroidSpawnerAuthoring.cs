@@ -1,8 +1,5 @@
-using NUnit.Framework;
 using Unity.Entities;
 using UnityEngine;
-using System.Collections.Generic;
-using Unity.Collections;
 
 namespace Asteroids
 {
@@ -11,6 +8,7 @@ namespace Asteroids
         public GameObject AsteroidPrefab;
         public int SpawnCount;
         public float Velocity;
+        public float RespawnDelay;
 
         class Baker : Baker<AsteroidSpawnerAuthoring>
         {
@@ -21,7 +19,9 @@ namespace Asteroids
                 {
                     AsteroidPrefab = GetEntity(authoring.AsteroidPrefab, TransformUsageFlags.Dynamic),
                     SpawnCount = authoring.SpawnCount,
-                    Velocity = authoring.Velocity
+                    InitialSpawnCount = authoring.SpawnCount,
+                    Velocity = authoring.Velocity,
+                    RespawnDelay = authoring.RespawnDelay
                 });
             }
         }
@@ -31,6 +31,10 @@ namespace Asteroids
     {
         public Entity AsteroidPrefab;
         public int SpawnCount;
+        public int InitialSpawnCount;
         public float Velocity;
+        public double NoAsteroidsTimestamp;
+        public double RespawnDelay;
+        public uint RespawnCounter;
     }
 }

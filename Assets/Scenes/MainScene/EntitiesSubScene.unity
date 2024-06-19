@@ -214,8 +214,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AsteroidPrefab: {fileID: 3955418798240587005, guid: 18bb600265b4a4a4fa29f69b9f5b8404, type: 3}
-  SpawnCount: 5
+  SpawnCount: 1
   Velocity: 1
+  RespawnDelay: 3
 --- !u!4 &1659002163
 Transform:
   m_ObjectHideFlags: 0

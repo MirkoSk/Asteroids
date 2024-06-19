@@ -38,7 +38,6 @@ partial class ShipCollisionSystem : SystemBase
                         entityCommandBuffer.AddComponent<Disabled>(linkedEntity.Value);
                     }
 
-                    // TODO: Pass lives as parameter
                     // Notify GameObject land about the death
                     OnDeath?.Invoke(ship.ValueRO.Lives);
 

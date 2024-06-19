@@ -10,6 +10,7 @@ partial struct OutOfBoundsSystem : ISystem
     public void OnCreate(ref SystemState state)
     {
         state.RequireForUpdate<Movement>();
+        state.RequireForUpdate<GameConfig>();
     }
 
     [BurstCompile]

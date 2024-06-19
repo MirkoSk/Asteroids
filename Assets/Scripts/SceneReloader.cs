@@ -1,14 +1,15 @@
-using TMPro;
 using Unity.Entities;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class LivesVisualizer : MonoBehaviour
+public class SceneReloader : MonoBehaviour
 {
     // ============== Serialized Fields ==============
-    [SerializeField] TextMeshProUGUI textmesh;
+    [SerializeField] float reloadDelayOnDeath = 3f;
 
     // =============== Private Fields ================
     ShipCollisionSystem shipCollisionSystem;
+    float deathTimestamp;
 
 
 
@@ -18,12 +19,23 @@ public class LivesVisualizer : MonoBehaviour
     private void Start()
     {
         shipCollisionSystem = World.DefaultGameObjectInjectionWorld.GetExistingSystemManaged<ShipCollisionSystem>();
-        shipCollisionSystem.OnDeath += UpdateText;
+        shipCollisionSystem.OnDeath += ReloadScene;
+    }
+
+    private void Update()
+    {
+        if (deathTimestamp == 0f) return;
+
+        if (Time.timeSinceLevelLoad - deathTimestamp >= reloadDelayOnDeath)
+        {
+            deathTimestamp = 0f;
+            SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
+        }
     }
 
     private void OnDestroy()
     {
-        shipCollisionSystem.OnDeath -= UpdateText;
+        shipCollisionSystem.OnDeath -= ReloadScene;
     }
 
 
@@ -31,8 +43,11 @@ public class LivesVisualizer : MonoBehaviour
     // ===============================================
     // =============== EVENT LISTENERS ===============
     // ===============================================
-    private void UpdateText(int lives)
+    private void ReloadScene(int lives)
     {
-        textmesh.text = lives.ToString();
+        if (lives == 0)
+        {
+            deathTimestamp = Time.timeSinceLevelLoad;
+        }
     }
 }
