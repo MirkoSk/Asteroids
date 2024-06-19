@@ -99,7 +99,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32d3bc8566d228343a5f8a734f5beb8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CollisionRadius: 0.3
+  CollisionRadius: 0.4
   FragmentPrefab: {fileID: 1273717868519207366, guid: 0b41583a19866d64b9483e371372b152, type: 3}
   FragmentsAmount: 2
 --- !u!114 &3644668813249460111

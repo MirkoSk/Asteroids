@@ -54,7 +54,7 @@ partial struct ProjectileHitDetectionSystem : ISystem
                             var spawnedPrefabMovement = SystemAPI.GetComponentRO<Movement>(asteroid.ValueRO.FragmentPrefab);
                             entityCommandBuffer.SetComponent(newAsteroidEntity, new Movement
                             {
-                                Value = math.normalize(random.NextFloat2(-1f, 1f)) * random.NextFloat(math.length(asteroidMovement.ValueRO.Value) * 1.5f, math.length(asteroidMovement.ValueRO.Value) * 2f),
+                                Value = math.normalize(random.NextFloat2(-1f, 1f)) * random.NextFloat(math.length(asteroidMovement.ValueRO.Value) * 1.1f, math.length(asteroidMovement.ValueRO.Value) * 1.5f),
                                 Drag = spawnedPrefabMovement.ValueRO.Drag,
                                 MaxSpeed = spawnedPrefabMovement.ValueRO.MaxSpeed
                             });

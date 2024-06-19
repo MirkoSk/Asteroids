@@ -235,7 +235,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Drag: 0.3
-  MaxSpeed: 5
+  MaxSpeed: 4
 --- !u!114 &3056200738448527542
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -248,7 +248,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7df2ee8b70d640d498748bd353c587e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Force: 0.01
+  Force: 0.015
   RotationSpeed: 3
   Lives: 3
 --- !u!114 &8675698426723164317
