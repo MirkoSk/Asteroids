@@ -6,6 +6,8 @@ namespace Asteroids
     class AsteroidAuthoring : MonoBehaviour
     {
         public float CollisionRadius = 1f;
+
+        [Header("Fragments")]
         public GameObject FragmentPrefab;
         public int FragmentsAmount = 2;
 

@@ -3,6 +3,7 @@ using Unity.Burst;
 using Unity.Entities;
 using Unity.Transforms;
 using Unity.Mathematics;
+using UnityEngine;
 
 partial struct OutOfBoundsSystem : ISystem
 {
@@ -18,22 +19,28 @@ partial struct OutOfBoundsSystem : ISystem
     {
         var gameConfig = SystemAPI.GetSingleton<GameConfig>();
 
-        foreach (var (transform, movement) in SystemAPI.Query<RefRW<LocalTransform>, RefRO<Movement>>())
+        var job = new OutOfBoundsJob
         {
-            if (math.abs(transform.ValueRO.Position.x) > gameConfig.PlayAreaBounds.x)
-            {
-                transform.ValueRW.Position = new float3(-transform.ValueRO.Position.x, transform.ValueRO.Position.y, transform.ValueRO.Position.z);
-            }
-            else if (math.abs(transform.ValueRO.Position.y) > gameConfig.PlayAreaBounds.y)
-            {
-                transform.ValueRW.Position = new float3(transform.ValueRO.Position.x, -transform.ValueRO.Position.y, transform.ValueRO.Position.z);
-            }
-        }
+            gameConfig = gameConfig
+        };
+        job.Schedule();
     }
 
     [BurstCompile]
-    public void OnDestroy(ref SystemState state)
+    public partial struct OutOfBoundsJob : IJobEntity
     {
-        
+        public GameConfig gameConfig;
+
+        public void Execute(ref LocalTransform transform)
+        {
+            if (math.abs(transform.Position.x) > gameConfig.PlayAreaBounds.x)
+            {
+                transform.Position = new float3(-transform.Position.x, transform.Position.y, transform.Position.z);
+            }
+            else if (math.abs(transform.Position.y) > gameConfig.PlayAreaBounds.y)
+            {
+                transform.Position = new float3(transform.Position.x, -transform.Position.y, transform.Position.z);
+            }
+        }
     }
 }
