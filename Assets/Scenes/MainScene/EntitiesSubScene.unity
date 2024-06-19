@@ -133,7 +133,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1512782934554904, guid: 401d8aca9e846254890399f66cd7de66, type: 3}
       propertyPath: m_Name
-      value: ship1
+      value: PlayerShip
       objectReference: {fileID: 0}
     - target: {fileID: 1512782934554904, guid: 401d8aca9e846254890399f66cd7de66, type: 3}
       propertyPath: m_IsActive
