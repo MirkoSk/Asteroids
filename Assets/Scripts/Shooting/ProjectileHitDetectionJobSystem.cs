@@ -6,7 +6,7 @@ using Unity.Mathematics;
 using Unity.Transforms;
 
 /// <remark>
-/// This is my best attempt at transferring the projectile's hit detection into a job system.
+/// This is my best attempt at transferring the projectile's hit detection into a job.
 /// I wasn't able to eliminate two race conditions yet so I don't use this code.
 /// </remark>
 [BurstCompile]

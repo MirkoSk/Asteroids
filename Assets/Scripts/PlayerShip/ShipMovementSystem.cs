@@ -22,6 +22,7 @@ partial struct ShipMovementSystem : ISystem
         float turnInput = Input.GetAxis("Horizontal");
         float accelerateInput = math.clamp(Input.GetAxis("Vertical"), 0f, 1f);
 
+        // Received any input?
         if (accelerateInput != 0f || turnInput != 0f)
         {
             foreach (var (transform, movement, player) in SystemAPI.Query<RefRW<LocalTransform>, RefRW<Movement>, RefRO<Ship>>())
@@ -36,6 +37,7 @@ partial struct ShipMovementSystem : ISystem
         }
 
         // Update ship's thruster graphic depending on move input
+        // Remark: Means a structural change but should be fine for once per frame. Maybe there's a more efficient way?
         foreach (var (shipThruster, entity) in SystemAPI.Query<RefRO<ShipThruster>>().WithEntityAccess().WithOptions(EntityQueryOptions.IncludeDisabledEntities))
         {
             if (accelerateInput != 0 && SystemAPI.HasComponent<Disabled>(entity))
@@ -51,11 +53,5 @@ partial struct ShipMovementSystem : ISystem
         entityCommandBuffer.Playback(state.EntityManager);
 
         entityCommandBuffer.Dispose();
-    }
-
-    [BurstCompile]
-    public void OnDestroy(ref SystemState state)
-    {
-        
     }
 }

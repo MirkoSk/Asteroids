@@ -8,6 +8,7 @@ namespace Asteroids
         public float Force = 0.01f;
         public float RotationSpeed = 1f;
         public int Lives = 3;
+        public float RespawnDuration = 3f;
 
         class Baker : Baker<ShipAuthoring>
         {
@@ -18,7 +19,8 @@ namespace Asteroids
                 {
                     Force = authoring.Force,
                     RotationSpeed = authoring.RotationSpeed,
-                    Lives = authoring.Lives
+                    Lives = authoring.Lives,
+                    RespawnDuration = authoring.RespawnDuration
                 });
             }
         }
@@ -30,5 +32,6 @@ namespace Asteroids
         public float RotationSpeed;
         public int Lives;
         public double DeathTimestamp;
+        public double RespawnDuration;
     }
 }

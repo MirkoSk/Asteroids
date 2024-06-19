@@ -2,37 +2,43 @@ using TMPro;
 using Unity.Entities;
 using UnityEngine;
 
-public class ScoreVisualizer : MonoBehaviour
+namespace Asteroids
 {
-    // ============== Serialized Fields ==============
-    [SerializeField] TextMeshProUGUI textmesh;
-
-    // =============== Private Fields ================
-    ScoringSystem scoringSystem;
-
-
-
-    // ===============================================
-    // ============ UNITY EVENT FUNCTIONS ============
-    // ===============================================
-    private void Start()
+    /// <summary>
+    /// Visualizes the current score of the player.
+    /// </summary>
+    public class ScoreVisualizer : MonoBehaviour
     {
-        scoringSystem = World.DefaultGameObjectInjectionWorld.GetExistingSystemManaged<ScoringSystem>();
-        scoringSystem.OnScoring += UpdateText;
-    }
+        // ============== Serialized Fields ==============
+        [SerializeField] TextMeshProUGUI textmesh;
 
-    private void OnDestroy()
-    {
-        scoringSystem.OnScoring -= UpdateText;
-    }
+        // =============== Private Fields ================
+        ScoringSystem scoringSystem;
 
 
 
-    // ===============================================
-    // =============== EVENT LISTENERS ===============
-    // ===============================================
-    private void UpdateText(int score)
-    {
-        textmesh.text = score.ToString();
+        // ===============================================
+        // ============ UNITY EVENT FUNCTIONS ============
+        // ===============================================
+        private void Start()
+        {
+            scoringSystem = World.DefaultGameObjectInjectionWorld.GetExistingSystemManaged<ScoringSystem>();
+            scoringSystem.OnScoring += UpdateText;
+        }
+
+        private void OnDestroy()
+        {
+            scoringSystem.OnScoring -= UpdateText;
+        }
+
+
+
+        // ===============================================
+        // =============== EVENT LISTENERS ===============
+        // ===============================================
+        private void UpdateText(int score)
+        {
+            textmesh.text = score.ToString();
+        }
     }
 }

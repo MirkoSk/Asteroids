@@ -31,7 +31,7 @@ partial struct ProjectileHitDetectionSystem : ISystem
                 SystemAPI.Query<RefRO<LocalToWorld>, RefRO<Movement>, RefRO<Asteroid>>()
                     .WithEntityAccess())
             {
-                // Did a projectile hit an asteroid?
+                // Did this projectile hit an asteroid?
                 if (math.distancesq(projectileWorldTransform.ValueRO.Position, asteroidWorldTransform.ValueRO.Position) < asteroid.ValueRO.CollisionRadiusSQ)
                 {
                     // Destroy projectile

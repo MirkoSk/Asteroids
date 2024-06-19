@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using Asteroids;
 using Unity.Burst;
 using Unity.Entities;
@@ -18,14 +17,12 @@ partial struct ShipRespawnSystem : ISystem
     {
         EntityCommandBuffer entityCommandBuffer = new EntityCommandBuffer(Unity.Collections.Allocator.Temp);
 
-        var gameConfig = SystemAPI.GetSingleton<GameConfig>();
-
         foreach (var (shipTransform, ship, shipMovement, shipEntity) in 
             SystemAPI.Query<RefRW<LocalTransform>, RefRO<Ship>, RefRW<Movement>>()
                 .WithAll<Disabled>()
                 .WithEntityAccess())
         {
-            if (ship.ValueRO.Lives > 0 && SystemAPI.Time.ElapsedTime - ship.ValueRO.DeathTimestamp >= gameConfig.ShipRespawnDuration)
+            if (ship.ValueRO.Lives > 0 && SystemAPI.Time.ElapsedTime - ship.ValueRO.DeathTimestamp >= ship.ValueRO.RespawnDuration)
             {
                 // Move ship back to center of the screen
                 shipTransform.ValueRW.Position = float3.zero;
@@ -45,11 +42,5 @@ partial struct ShipRespawnSystem : ISystem
         entityCommandBuffer.Playback(state.EntityManager);
 
         entityCommandBuffer.Dispose();
-    }
-
-    [BurstCompile]
-    public void OnDestroy(ref SystemState state)
-    {
-        
     }
 }

@@ -31,6 +31,7 @@ partial struct MovementSystem : ISystem
         {
             // Factor in drag
             movement.Value *= (1 - deltaTime * movement.Drag);
+
             // Clamp vector to MaxSpeed
             if (math.length(movement.Value) > movement.MaxSpeed) movement.Value = math.normalize(movement.Value) * movement.MaxSpeed;
 

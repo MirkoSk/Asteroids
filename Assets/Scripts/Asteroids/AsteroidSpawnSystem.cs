@@ -3,7 +3,6 @@ using Unity.Entities;
 using Unity.Collections;
 using Unity.Transforms;
 using Unity.Mathematics;
-using System.Diagnostics;
 
 namespace Asteroids
 {
@@ -27,7 +26,6 @@ namespace Asteroids
             }
 
             var asteroidSpawner = SystemAPI.GetSingletonRW<AsteroidSpawner>();
-            var gameConfig = SystemAPI.GetSingleton<GameConfig>();
 
             // If there are no asteroids on the field => Respawn them delayed and increase the amount (except for the first spawn)
             if (asteroidSpawner.ValueRO.RespawnCounter > 0)
@@ -44,11 +42,18 @@ namespace Asteroids
                 asteroidSpawner.ValueRW.NoAsteroidsTimestamp = 0f;
             }
 
+            SpawnAsteroids(ref state, asteroidSpawner);
+        }
+
+        public void SpawnAsteroids(ref SystemState state, RefRW<AsteroidSpawner> asteroidSpawner)
+        {
+            var gameConfig = SystemAPI.GetSingleton<GameConfig>();
+
             EntityCommandBuffer entityCommandBuffer = new EntityCommandBuffer(Allocator.Temp);
 
             var random = Random.CreateFromIndex(asteroidSpawner.ValueRW.RespawnCounter++);
 
-            // TODO: How to spawn a random prefab from an array?
+            // Spawn the asteroids
             for (int i = 0; i < asteroidSpawner.ValueRO.SpawnCount; i++)
             {
                 var asteroidEntity = entityCommandBuffer.Instantiate(asteroidSpawner.ValueRO.AsteroidPrefab);
@@ -64,8 +69,9 @@ namespace Asteroids
                     Scale = 1
                 });
 
-                entityCommandBuffer.SetComponent(asteroidEntity, new Movement 
-                { 
+                // Initialize movement
+                entityCommandBuffer.SetComponent(asteroidEntity, new Movement
+                {
                     Value = math.normalize(random.NextFloat2(-1f, 1f)) * asteroidSpawner.ValueRO.Velocity * random.NextFloat(0.8f, 1.2f),
                     Drag = SystemAPI.GetComponentRO<Movement>(asteroidSpawner.ValueRO.AsteroidPrefab).ValueRO.Drag,
                     MaxSpeed = SystemAPI.GetComponentRO<Movement>(asteroidSpawner.ValueRO.AsteroidPrefab).ValueRO.MaxSpeed
@@ -75,12 +81,6 @@ namespace Asteroids
             entityCommandBuffer.Playback(state.EntityManager);
 
             entityCommandBuffer.Dispose();
-        }
-
-        [BurstCompile]
-        public void OnDestroy(ref SystemState state)
-        {
-
         }
     }
 }

@@ -3,7 +3,6 @@ using Unity.Burst;
 using Unity.Entities;
 using Unity.Transforms;
 using Unity.Mathematics;
-using UnityEngine;
 
 partial struct OutOfBoundsSystem : ISystem
 {
@@ -33,10 +32,12 @@ partial struct OutOfBoundsSystem : ISystem
 
         public void Execute(ref LocalTransform transform)
         {
+            // Out of bounds left/right
             if (math.abs(transform.Position.x) > gameConfig.PlayAreaBounds.x)
             {
                 transform.Position = new float3(-transform.Position.x, transform.Position.y, transform.Position.z);
             }
+            // Out of bounds up/down
             else if (math.abs(transform.Position.y) > gameConfig.PlayAreaBounds.y)
             {
                 transform.Position = new float3(transform.Position.x, -transform.Position.y, transform.Position.z);

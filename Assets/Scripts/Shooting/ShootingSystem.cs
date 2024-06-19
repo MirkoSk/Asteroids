@@ -49,10 +49,4 @@ partial struct ShootingSystem : ISystem
             }
         }
     }
-
-    [BurstCompile]
-    public void OnDestroy(ref SystemState state)
-    {
-        
-    }
 }

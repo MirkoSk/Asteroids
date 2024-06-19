@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using Asteroids;
 using Unity.Burst;
 using Unity.Entities;
@@ -28,11 +27,5 @@ partial struct ProjectileLifetimeSystem : ISystem
         entityCommandBuffer.Playback(state.EntityManager);
 
         entityCommandBuffer.Dispose();
-    }
-
-    [BurstCompile]
-    public void OnDestroy(ref SystemState state)
-    {
-        
     }
 }

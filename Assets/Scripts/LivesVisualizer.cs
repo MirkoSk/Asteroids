@@ -2,37 +2,43 @@ using TMPro;
 using Unity.Entities;
 using UnityEngine;
 
-public class LivesVisualizer : MonoBehaviour
+namespace Asteroids
 {
-    // ============== Serialized Fields ==============
-    [SerializeField] TextMeshProUGUI textmesh;
-
-    // =============== Private Fields ================
-    ShipCollisionSystem shipCollisionSystem;
-
-
-
-    // ===============================================
-    // ============ UNITY EVENT FUNCTIONS ============
-    // ===============================================
-    private void Start()
+    /// <summary>
+    /// Visualizes the remaining lives of the player.
+    /// </summary>
+    public class LivesVisualizer : MonoBehaviour
     {
-        shipCollisionSystem = World.DefaultGameObjectInjectionWorld.GetExistingSystemManaged<ShipCollisionSystem>();
-        shipCollisionSystem.OnDeath += UpdateText;
-    }
+        // ============== Serialized Fields ==============
+        [SerializeField] TextMeshProUGUI textmesh;
 
-    private void OnDestroy()
-    {
-        shipCollisionSystem.OnDeath -= UpdateText;
-    }
+        // =============== Private Fields ================
+        ShipCollisionSystem shipCollisionSystem;
 
 
 
-    // ===============================================
-    // =============== EVENT LISTENERS ===============
-    // ===============================================
-    private void UpdateText(int lives)
-    {
-        textmesh.text = lives.ToString();
+        // ===============================================
+        // ============ UNITY EVENT FUNCTIONS ============
+        // ===============================================
+        private void Start()
+        {
+            shipCollisionSystem = World.DefaultGameObjectInjectionWorld.GetExistingSystemManaged<ShipCollisionSystem>();
+            shipCollisionSystem.OnDeath += UpdateText;
+        }
+
+        private void OnDestroy()
+        {
+            shipCollisionSystem.OnDeath -= UpdateText;
+        }
+
+
+
+        // ===============================================
+        // =============== EVENT LISTENERS ===============
+        // ===============================================
+        private void UpdateText(int lives)
+        {
+            textmesh.text = lives.ToString();
+        }
     }
 }

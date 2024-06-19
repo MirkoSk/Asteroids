@@ -2,6 +2,9 @@ using Unity.Entities;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// Reloads the scene when the player has no lives left.
+/// </summary>
 public class SceneReloader : MonoBehaviour
 {
     // ============== Serialized Fields ==============

@@ -251,6 +251,7 @@ MonoBehaviour:
   Force: 0.015
   RotationSpeed: 3
   Lives: 3
+  RespawnDuration: 3
 --- !u!114 &8675698426723164317
 MonoBehaviour:
   m_ObjectHideFlags: 0
