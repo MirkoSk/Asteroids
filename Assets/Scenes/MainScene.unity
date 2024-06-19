@@ -364,6 +364,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 428659339}
+  - component: {fileID: 428659342}
   - component: {fileID: 428659341}
   - component: {fileID: 428659340}
   m_Layer: 5
@@ -412,7 +413,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 97310
+  m_text: 0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3f94a1ca68a0caf4a8c6ba89d22ad6f5, type: 2}
   m_sharedMaterial: {fileID: 6294913649408575565, guid: 3f94a1ca68a0caf4a8c6ba89d22ad6f5, type: 2}
@@ -489,6 +490,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 428659338}
   m_CullTransparentMesh: 1
+--- !u!114 &428659342
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 428659338}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 874933dd68577a0458ec08ea190170e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textmesh: {fileID: 428659340}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -1015,7 +1029,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reloadDelayOnDeath: 3
-  subScene: {fileID: 1771688448}
 --- !u!4 &1958736766
 Transform:
   m_ObjectHideFlags: 0

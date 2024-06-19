@@ -47,6 +47,7 @@ MonoBehaviour:
   ProjectilePrefab: {fileID: 1746797733073528, guid: 7949930a4be82f14497a46200e300772, type: 3}
   ProjectileSpeed: 10
   ProjectileLifetime: 0.8
+  MaxProjectilesOnScreen: 4
 --- !u!1 &1400420817260280
 GameObject:
   m_ObjectHideFlags: 0
@@ -249,6 +250,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Force: 0.01
   RotationSpeed: 3
+  Lives: 3
 --- !u!114 &8675698426723164317
 MonoBehaviour:
   m_ObjectHideFlags: 0

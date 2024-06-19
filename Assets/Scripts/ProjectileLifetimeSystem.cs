@@ -20,6 +20,7 @@ partial struct ProjectileLifetimeSystem : ISystem
         {
             if (SystemAPI.Time.ElapsedTime > projectile.ValueRO.SpawnTime + projectile.ValueRO.Lifetime)
             {
+                SystemAPI.GetComponentRW<Turret>(projectile.ValueRO.Turret).ValueRW.ProjectilesCurrentlyOnScreen--;
                 entityCommandBuffer.DestroyEntity(entity);
             }
         }

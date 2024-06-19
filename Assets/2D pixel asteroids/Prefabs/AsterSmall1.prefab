@@ -10,8 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 3398839194376591794}
   - component: {fileID: 3861097418370609488}
-  - component: {fileID: 5914213489384813721}
   - component: {fileID: 8396807805121941077}
+  - component: {fileID: 5914213489384813721}
+  - component: {fileID: 3080831000354289605}
   m_Layer: 0
   m_Name: AsterSmall1
   m_TagString: Untagged
@@ -86,20 +87,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &5914213489384813721
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1273717868519207366}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4fc5ce10f9a7cb445806bf0c7b8cc98d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Drag: 0
-  MaxSpeed: 5
 --- !u!114 &8396807805121941077
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -115,3 +102,30 @@ MonoBehaviour:
   CollisionRadius: 0.15
   FragmentPrefab: {fileID: 0}
   FragmentsAmount: 0
+--- !u!114 &5914213489384813721
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1273717868519207366}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4fc5ce10f9a7cb445806bf0c7b8cc98d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Drag: 0
+  MaxSpeed: 5
+--- !u!114 &3080831000354289605
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1273717868519207366}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22ce0f02e955847468505539f3fec987, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Value: 100

@@ -48,6 +48,7 @@ public class SceneReloader : MonoBehaviour
         if (lives == 0)
         {
             deathTimestamp = Time.timeSinceLevelLoad;
+            World.DefaultGameObjectInjectionWorld.GetExistingSystemManaged<ScoringSystem>().ResetScore();
         }
     }
 }

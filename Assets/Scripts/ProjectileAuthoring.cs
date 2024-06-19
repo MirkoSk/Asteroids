@@ -22,5 +22,6 @@ namespace Asteroids
     {
         public double SpawnTime;
         public double Lifetime;
+        public Entity Turret;
     }
 }

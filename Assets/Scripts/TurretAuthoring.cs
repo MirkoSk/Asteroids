@@ -6,8 +6,9 @@ namespace Asteroids
     class TurretAuthoring : MonoBehaviour
     {
         public GameObject ProjectilePrefab;
-        public float ProjectileSpeed;
-        public float ProjectileLifetime;
+        public float ProjectileSpeed = 10f;
+        public float ProjectileLifetime = 1f;
+        public int MaxProjectilesOnScreen = 4;
 
         class Baker : Baker<TurretAuthoring>
         {
@@ -18,7 +19,8 @@ namespace Asteroids
                 {
                     ProjectilePrefab = GetEntity(authoring.ProjectilePrefab, TransformUsageFlags.Dynamic),
                     ProjectileSpeed = authoring.ProjectileSpeed,
-                    ProjectileLifetime = authoring.ProjectileLifetime
+                    ProjectileLifetime = authoring.ProjectileLifetime,
+                    MaxProjectilesOnScreen = authoring.MaxProjectilesOnScreen
                 });
             }
         }
@@ -29,5 +31,7 @@ namespace Asteroids
         public Entity ProjectilePrefab;
         public float ProjectileSpeed;
         public double ProjectileLifetime;
+        public int MaxProjectilesOnScreen;
+        public int ProjectilesCurrentlyOnScreen;
     }
 }

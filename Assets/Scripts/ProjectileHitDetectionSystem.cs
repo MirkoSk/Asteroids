@@ -4,6 +4,7 @@ using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
 
+[BurstCompile]
 [UpdateAfter(typeof(ShipCollisionSystem))]
 partial struct ProjectileHitDetectionSystem : ISystem
 {
@@ -22,8 +23,8 @@ partial struct ProjectileHitDetectionSystem : ISystem
 
         var random = Random.CreateFromIndex(updateCounter++);
 
-        foreach (var (projectileWorldTransform, projectileEntity) in 
-            SystemAPI.Query<RefRO<LocalToWorld>>().WithAll<Projectile>()
+        foreach (var (projectileWorldTransform, projectile, projectileEntity) in 
+            SystemAPI.Query<RefRO<LocalToWorld>, RefRO<Projectile>>()
                 .WithEntityAccess())
         {
             foreach (var (asteroidWorldTransform, asteroidMovement, asteroid, asteroidEntity) in 
@@ -34,6 +35,7 @@ partial struct ProjectileHitDetectionSystem : ISystem
                 if (math.distancesq(projectileWorldTransform.ValueRO.Position, asteroidWorldTransform.ValueRO.Position) < asteroid.ValueRO.CollisionRadiusSQ)
                 {
                     // Destroy projectile
+                    SystemAPI.GetComponentRW<Turret>(projectile.ValueRO.Turret).ValueRW.ProjectilesCurrentlyOnScreen--;
                     entityCommandBuffer.DestroyEntity(projectileEntity);
 
                     // Spawn smaller asteroid fragments if linked
@@ -59,6 +61,9 @@ partial struct ProjectileHitDetectionSystem : ISystem
                         }
                     }
 
+                    // Add player score
+                    SystemAPI.GetSingletonRW<PlayerScore>().ValueRW.CurrentValue += SystemAPI.GetComponentRO<Score>(asteroidEntity).ValueRO.Value;
+
                     // Destroy asteroid
                     entityCommandBuffer.DestroyEntity(asteroidEntity);
                 }
@@ -68,11 +73,5 @@ partial struct ProjectileHitDetectionSystem : ISystem
         entityCommandBuffer.Playback(state.EntityManager);
 
         entityCommandBuffer.Dispose();
-    }
-
-    [BurstCompile]
-    public void OnDestroy(ref SystemState state)
-    {
-        
     }
 }

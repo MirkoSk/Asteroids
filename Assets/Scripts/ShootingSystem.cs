@@ -18,8 +18,14 @@ partial struct ShootingSystem : ISystem
     {
         if (Input.GetButtonDown("Fire"))
         {
-            foreach (var (transform, turret) in SystemAPI.Query<RefRO<LocalToWorld>, RefRO<Turret>>())
+            foreach (var (transform, turret, turretEntity) in SystemAPI.Query<RefRO<LocalToWorld>, RefRW<Turret>>().WithEntityAccess())
             {
+                // Only x projectiles allowed on screen at the same time
+                if (turret.ValueRO.ProjectilesCurrentlyOnScreen >= turret.ValueRO.MaxProjectilesOnScreen)
+                {
+                    return;
+                }
+
                 Entity projectile = state.EntityManager.Instantiate(turret.ValueRO.ProjectilePrefab);
 
                 // Set transform
@@ -33,10 +39,13 @@ partial struct ShootingSystem : ISystem
                 bulletMovement.ValueRW.Value = math.normalize(shootingDirection) * turret.ValueRO.ProjectileSpeed;
                 bulletMovement.ValueRW.MaxSpeed = turret.ValueRO.ProjectileSpeed;
 
-                // Set projectile lifetime
+                // Set projectile lifetime and turret reference
                 var projectileComponent = SystemAPI.GetComponentRW<Projectile>(projectile);
                 projectileComponent.ValueRW.SpawnTime = SystemAPI.Time.ElapsedTime;
                 projectileComponent.ValueRW.Lifetime = turret.ValueRO.ProjectileLifetime;
+                projectileComponent.ValueRW.Turret = turretEntity;
+
+                turret.ValueRW.ProjectilesCurrentlyOnScreen++;
             }
         }
     }
