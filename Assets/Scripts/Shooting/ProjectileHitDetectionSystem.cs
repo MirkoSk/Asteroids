@@ -6,18 +6,20 @@ using Unity.Transforms;
 
 [BurstCompile]
 [UpdateAfter(typeof(ShipCollisionSystem))]
-partial struct ProjectileHitDetectionSystem : ISystem
+partial class ProjectileHitDetectionSystem : SystemBase
 {
+    public event System.Action OnHit;
+
     uint updateCounter;
 
     [BurstCompile]
-    public void OnCreate(ref SystemState state)
+    protected override void OnCreate()
     {
-        state.RequireForUpdate<Projectile>();
+        RequireForUpdate<Projectile>();
     }
 
     [BurstCompile]
-    public void OnUpdate(ref SystemState state)
+    protected override void OnUpdate()
     {
         EntityCommandBuffer entityCommandBuffer = new EntityCommandBuffer(Unity.Collections.Allocator.Temp);
 
@@ -64,13 +66,16 @@ partial struct ProjectileHitDetectionSystem : ISystem
                     // Add player score
                     SystemAPI.GetSingletonRW<PlayerScore>().ValueRW.CurrentValue += SystemAPI.GetComponentRO<Score>(asteroidEntity).ValueRO.Value;
 
+                    // Inform GameObject land
+                    OnHit?.Invoke();
+
                     // Destroy asteroid
                     entityCommandBuffer.DestroyEntity(asteroidEntity);
                 }
             }
         }
 
-        entityCommandBuffer.Playback(state.EntityManager);
+        entityCommandBuffer.Playback(EntityManager);
 
         entityCommandBuffer.Dispose();
     }

@@ -6,16 +6,19 @@ using Unity.Transforms;
 using UnityEngine;
 
 [UpdateBefore(typeof(MovementSystem))]
-partial struct ShipMovementSystem : ISystem
+[BurstCompile]
+partial class ShipMovementSystem : SystemBase
 {
+    public event System.Action<bool> OnThrust;
+
     [BurstCompile]
-    public void OnCreate(ref SystemState state)
+    protected override void OnCreate()
     {
-        state.RequireForUpdate<Ship>();
+        RequireForUpdate<Ship>();
     }
 
     [BurstCompile]
-    public void OnUpdate(ref SystemState state)
+    protected override void OnUpdate()
     {
         EntityCommandBuffer entityCommandBuffer = new EntityCommandBuffer(Unity.Collections.Allocator.Temp);
 
@@ -43,14 +46,16 @@ partial struct ShipMovementSystem : ISystem
             if (accelerateInput != 0 && SystemAPI.HasComponent<Disabled>(entity))
             {
                 entityCommandBuffer.RemoveComponent<Disabled>(entity);
+                OnThrust?.Invoke(true);
             }
             else if (accelerateInput == 0 && !SystemAPI.HasComponent<Disabled>(entity))
             {
                 entityCommandBuffer.AddComponent<Disabled>(entity);
+                OnThrust?.Invoke(false);
             }
         }
 
-        entityCommandBuffer.Playback(state.EntityManager);
+        entityCommandBuffer.Playback(EntityManager);
 
         entityCommandBuffer.Dispose();
     }

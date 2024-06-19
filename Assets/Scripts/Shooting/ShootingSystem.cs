@@ -5,16 +5,19 @@ using Unity.Mathematics;
 using Unity.Transforms;
 using UnityEngine;
 
-partial struct ShootingSystem : ISystem
+[BurstCompile]
+partial class ShootingSystem : SystemBase
 {
+    public event System.Action OnShoot;
+
     [BurstCompile]
-    public void OnCreate(ref SystemState state)
+    protected override void OnCreate()
     {
-        state.RequireForUpdate<Turret>();
+        RequireForUpdate<Turret>();
     }
 
     [BurstCompile]
-    public void OnUpdate(ref SystemState state)
+    protected override void OnUpdate()
     {
         if (Input.GetButtonDown("Fire"))
         {
@@ -26,7 +29,7 @@ partial struct ShootingSystem : ISystem
                     return;
                 }
 
-                Entity projectile = state.EntityManager.Instantiate(turret.ValueRO.ProjectilePrefab);
+                Entity projectile = EntityManager.Instantiate(turret.ValueRO.ProjectilePrefab);
 
                 // Set transform
                 var bulletTransform = SystemAPI.GetComponentRW<LocalTransform>(projectile);
@@ -44,6 +47,9 @@ partial struct ShootingSystem : ISystem
                 projectileComponent.ValueRW.SpawnTime = SystemAPI.Time.ElapsedTime;
                 projectileComponent.ValueRW.Lifetime = turret.ValueRO.ProjectileLifetime;
                 projectileComponent.ValueRW.Turret = turretEntity;
+
+                // Inform GameObject land
+                OnShoot?.Invoke();
 
                 turret.ValueRW.ProjectilesCurrentlyOnScreen++;
             }
