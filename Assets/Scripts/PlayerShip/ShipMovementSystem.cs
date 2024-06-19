@@ -35,7 +35,7 @@ partial class ShipMovementSystem : SystemBase
 
                 // Update the movement component depending on input
                 float2 moveDirection = new float2(transform.ValueRO.Up().x, transform.ValueRO.Up().y);
-                movement.ValueRW.Value += moveDirection * accelerateInput * player.ValueRO.Force;
+                movement.ValueRW.Value += moveDirection * accelerateInput * player.ValueRO.Force * SystemAPI.Time.DeltaTime;
             }
         }
 
